@@ -6,6 +6,21 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="game">
+        <h1>Guess My Number!</h1>
+        <p class="message">Guess a number between 1 and 50:</p>
+        <input type="number" class="numberInput">
+        <input type="hidden" class="randomInput">
+        <div class="error" style="color: red;"></div>
+        <button class="check">Check!</button>
+        <button class="again">Again</button>
+        <br>
+        <div style="display: inline-block;">
+          <p>Score</p>
+          <p class="score" value="0"></p>
+        </div>
+      </div>
+
     <script>
         //Câu 1
         console.log('   Coding Challenge #1');
@@ -235,8 +250,149 @@
         console.log("Data 2:");
         printForecast(data2);
 
-        //Cau 10:
-        console.log('\n   Coding Challenge #10');
+        //JavaScript in the Browser: DOM and Events
+        console.log('\n\n\n        JavaScript in the Browser: DOM and Events');
+        console.log('   Coding Challenge #1');
+        const message = document.querySelector('.message');
+        const numberInput = document.querySelector('.numberInput');
+        const scoreDisplay = document.querySelector('.score');
+        const randomInput = document.querySelector('.randomInput');
+        const again = document.querySelector('.again');
+        const check = document.querySelector('.check');
+        const error = document.querySelector('.error');
+        let score = 0;
+
+        // Khởi tạo giá trị ngẫu nhiên ban đầu
+        randomInput.value = Math.floor(Math.random() * 51);
+        console.log(randomInput.value);
+
+        again.addEventListener('click', () => {
+        // Khởi tạo giá trị ngẫu nhiên mới khi nhấn nút "Again"
+        randomInput.value = Math.floor(Math.random() * 51);
+        message.textContent = "Guess a number between 1 and 50:"; // Đặt lại thông báo
+        score = 0; // Đặt lại điểm số
+        scoreDisplay.textContent = score; // Cập nhật hiển thị điểm số
+        numberInput.value = ''; // Đặt lại giá trị đầu vào
+        error.textContent = ''; // Đặt lại thông báo lỗi
+        });
+
+        check.addEventListener('click', () => {
+        const userGuess = parseInt(numberInput.value);
+        const randomNumber = parseInt(randomInput.value);
+
+        if (isNaN(userGuess) || userGuess < 1 || userGuess > 50) {
+            error.textContent = "Please enter a valid number between 1 and 50.";
+        } else if (userGuess === randomNumber) {
+            message.textContent = "Congratulations! You guessed the correct number!";
+            score += 10;
+            scoreDisplay.textContent = score;
+            document.body.style.backgroundColor = 'red'; // Thay đổi màu nền khi đoán đúng
+            randomInput.value = Math.floor(Math.random() * 101);
+            numberInput.value = '';
+            error.textContent = ''; // Đặt lại thông báo lỗi
+        } else {
+            error.textContent = "Try again!";
+        }
+        });
+
+        //Data Structures, Modern Operators and Strings
+        console.log('\n\n\n        Data Structures, Modern Operators and Strings');
+        //Câu 1:
+        console.log('   Coding Challenge #1');
+
+        const game = {
+            teams: [
+                {
+                    name: 'Bayern Munich',
+                    players: [
+                        'Neuer', 'Davies', 'Lucas Hernandez', 'Upamecano', 'Kimmich',
+                        'Goretzka', 'Muller', 'Gnabry', 'Lewandowski', 'Coman',
+                    ],
+                },
+                {
+                    name: 'Borussia Dortmund',
+                    players: [
+                        'Kobel', 'Meunier', 'Akanji', 'Hummels', 'Guerreiro',
+                        'Witsel', 'Bellingham', 'Reus', 'Haaland', 'Malen',
+                    ],
+                },
+            ],
+            scored: ['Lewandowski', 'Gnabry', 'Reus'],
+            odds: {
+                team1: 1.6,
+                draw: 3.5,
+                team2: 5.5,
+            },
+            scorers: {
+                Gnarby: 1,
+                Hummels: 1,
+                Lewandowski: 2,
+            },
+        };
+
+        const players1 = game.teams[0].players.slice(); // Sao chép mảng người chơi
+        const players2 = game.teams[1].players.slice(); // Sao chép mảng người chơi
+
+        players1[0] = 'gk';
+        players2[0] = 'gk';
+
+        const allPlayers = [...players1, ...players2];
+
+        const players1Final = ['Thiago', 'Coutinho', 'Perisic', ...players1];
+
+        const printGoals = (...players) => {
+            console.log(`${players.length} goals were scored.`);
+            players.forEach((player, index) => {
+                console.log(`${player} scored ${game.scorers[player]} goal(s).`);
+            });
+        };
+
+        const team1 = game.odds.team1;
+        const team2 = game.odds.team2;
+        const draw = game.odds.draw;
+
+        console.log('Players of Team 1:', players1);
+        console.log('Players of Team 2:', players2);
+        console.log('All Players:', allPlayers);
+        console.log('Players 1 with Substitutes:', players1Final);
+        console.log('Team 1 Odds:', team1);
+        console.log('Team 2 Odds:', team2);
+        console.log('Draw Odds:', draw);
+
+        console.log("Use players 'Davies', 'Muller', 'Lewandowski', and 'Kimmich'.");
+        printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich');
+
+        console.log('Players from game.scored:');
+        printGoals(...game.scored);
+
+        const oddsArr = [team1, team2, draw];
+        const minValue = Math.min(...oddsArr);
+
+        const favoredTeam = game.odds.team1 === minValue ? 'Team 1' : game.odds.team2 === minValue ? 'Team 2' : 'Draw';
+        console.log(`The team with the lower odd is more likely to win: ${favoredTeam}`);
+
+        //Câu 2: 
+        console.log('\n   Coding Challenge #2');
+
+        game.scored.forEach((player, index) => {
+            console.log(`Goal ${index + 1}: ${player}`);
+        });
+
+        const oddsValues = Object.values(game.odds);
+        const averageOdd = oddsValues.reduce((total, odd) => total + odd, 0) / oddsValues.length;
+        console.log('Average Odds:', averageOdd);
+
+        console.log('Odds:');
+        for (const key in game.odds) {
+            if (key === 'draw') {
+                console.log(`Odd of draw: ${game.odds[key]}`);
+            } else {
+                console.log(`Odd of ${key} Bayern Munich: ${game.odds[key]}`);
+            }
+        }
+
+        //Câu 3:
+        console.log('\n   Coding Challenge #3');
 
     </script>
 </body>
