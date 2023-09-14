@@ -7,6 +7,7 @@
 </head>
 <body>
     <script>
+        //Câu 1
         console.log('   Coding Challenge #1');
         BMI = (mass, height) => {
             var bmi = mass / (height * height);
@@ -29,7 +30,7 @@
         var markHigherBMI2 = Mark2 > John2;
         console.log("Is Mark's BMI higher than John's in Data 2? ", markHigherBMI2);
         
-
+        //Câu 2:
         console.log('\n   Coding Challenge #2');
         if (Mark1 > John1) {
             console.log(`Mark's BMI (${Mark1.toFixed(1)}) is higher than John's (${John1.toFixed(1)}) in Data 1!`);
@@ -47,7 +48,7 @@
             console.log("Mark's and John's BMI are equal in Data 2!");
         }
 
-
+        //Câu 3:
         console.log('\n   Coding Challenge #3');
         // Data 1
         const dolphinsScores1 = [96, 108, 89];
@@ -85,7 +86,7 @@
         // Data Bonus 2
         console.log("Data Bonus 2:", determineWinner(dolphinsScores3, koalasScores3));
 
-
+        //Câu 4:
         console.log('\n   Coding Challenge #4');
         const Tipcalculator = (billnum) => {
             if (billnum >= 50 && billnum <= 300) {
@@ -103,11 +104,139 @@
             console.log(`The bill was ${element}, the tip was ${tip.toFixed(2)}, and the total value ${total.toFixed(2)}`);
         });
 
-
+        //Câu 5:
         console.log('\n   Coding Challenge #5');
-        
-        
+        // Bước 1: Tạo hàm tính trung bình
+        const calcAverage = (score1, score2, score3) => (score1 + score2 + score3) / 3;
 
+        // Bước 2: Tính trung bình điểm cho cả đội Dolphin và đội Koala
+        const avgDolphinsData1 = calcAverage(44, 23, 71);
+        const avgKoalasData1 = calcAverage(65, 54, 49);
+
+        const avgDolphinsData2 = calcAverage(85, 54, 41);
+        const avgKoalasData2 = calcAverage(23, 34, 27);
+
+        // Bước 3: Tạo hàm kiểm tra người thắng cuộc
+        const checkWinner = (avgDolphins, avgKoalas) => {
+        if (avgDolphins >= avgKoalas * 2) {
+            console.log(`Dolphins win (${avgDolphins} vs. ${avgKoalas})`);
+        } else if (avgKoalas >= avgDolphins * 2) {
+            console.log(`Koalas win (${avgKoalas} vs. ${avgDolphins})`);
+        } else {
+            console.log("No team wins.");
+        }
+        };
+
+        // Bước 4: Sử dụng hàm 'checkWinner' cho cả Data 1 và Data 2
+        console.log("Data 1:");
+        checkWinner(avgDolphinsData1, avgKoalasData1);
+
+        console.log("Data 2:");
+        checkWinner(avgDolphinsData2, avgKoalasData2);
+
+        //Câu 6:
+        console.log('\n   Coding Challenge #6');
+        const calcTip = (bill) => {
+        if (bill >= 50 && bill <= 300) {
+            return bill * 0.15; // 15% tip
+        } else {
+            return bill * 0.2; // 20% tip
+        }
+        };
+
+        const bills = [125, 555, 44];
+        const tips = bills.map((bill) => calcTip(bill));
+        const totals = bills.map((bill, index) => bill + tips[index]);
+
+        console.log("Bills:", bills);
+        console.log("Tips:", tips);
+        console.log("Total values:", totals);
+
+        //Câu 7:
+        console.log('\n   Coding Challenge #7');
+        // Tạo đối tượng cho Mark và John với các thuộc tính fullName, mass, và height
+        const mark = {
+        fullName: "Mark Miller",
+        mass: 78, // kg
+        height: 1.69, // meter
+
+        // Phương thức tính BMI và lưu vào thuộc tính bmi
+        calcBMI: function () {
+            this.bmi = this.mass / (this.height ** 2);
+            return this.bmi;
+        },
+        };
+
+        const john = {
+        fullName: "John Smith",
+        mass: 92, // kg
+        height: 1.95, // meter
+
+        // Phương thức tính BMI và lưu vào thuộc tính bmi
+        calcBMI: function () {
+            this.bmi = this.mass / (this.height ** 2);
+            return this.bmi;
+        },
+        };
+
+        // Tính toán BMI cho cả Mark và John
+        mark.calcBMI();
+        john.calcBMI();
+
+        // So sánh và in ra thông tin về người có BMI cao hơn
+        if (mark.bmi > john.bmi) {
+        console.log(`${mark.fullName}'s BMI (${mark.bmi.toFixed(1)}) is higher than ${john.fullName}'s (${john.bmi.toFixed(1)})!`);
+        } else if (john.bmi > mark.bmi) {
+        console.log(`${john.fullName}'s BMI (${john.bmi.toFixed(1)}) is higher than ${mark.fullName}'s (${mark.bmi.toFixed(1)})!`);
+        } else {
+        console.log(`Both ${mark.fullName} and ${john.fullName} have the same BMI (${mark.bmi.toFixed(1)})!`);
+        }
+
+        //Câu 8:
+        console.log('\n   Coding Challenge #8');
+        // Tạo mảng bills chứa giá trị các hóa đơn kiểm tra
+        const bill8 = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
+
+        // Hàm tính giá trị tip dựa trên hóa đơn
+        const calcTip8 = (bill) => {
+        return bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
+        };
+
+        // Tạo mảng trống tips và totals
+        const tip8 = [];
+        const total8 = [];
+
+        // Tính toán giá trị tip và tổng (hóa đơn + tip) cho từng hóa đơn
+        for (let i = 0; i < bills.length; i++) {
+        const tip = calcTip(bills[i]);
+        tips.push(tip);
+        totals.push(bills[i] + tip);
+        }
+
+        console.log("Tips:", tips);
+        console.log("Totals:", totals);
+
+        //Câu 9:
+        console.log('\n   Coding Challenge #9');
+        const printForecast = (arr) => {
+        let forecastString = "";
+        for (let i = 0; i < arr.length; i++) {
+            forecastString += `${arr[i]}°C in ${i + 1} day\n`;
+        }
+        console.log(forecastString);
+        };
+
+        const data1 = [17, 21, 23];
+        const data2 = [12, 5, -5, 0, 4];
+
+        console.log("Data 1:");
+        printForecast(data1);
+
+        console.log("Data 2:");
+        printForecast(data2);
+
+        //Cau 10:
+        console.log('\n   Coding Challenge #10');
 
     </script>
 </body>
