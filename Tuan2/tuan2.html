@@ -6,6 +6,13 @@
     <title>Document</title>
 </head>
 <body>
+    <!-- Ý câu 4 -->
+    <textarea id="inputTextarea" rows="5" cols="50"></textarea>
+    <button id="convertButton">Convert</button>
+    <div id="outputDiv"></div>
+    <!-- ý câu 1 A Closer Look at Functions -->
+    <p>A Closer Look at Functions </p>
+    <button class="answer-btn">Answer poll</button> 
     <script>
         //Data Structures, Modern Operators and Strings
         console.log('Data Structures, Modern Operators and Strings');
@@ -57,6 +64,387 @@
         };
 
         whichHalfTimeHappend(gameEvents);
+
+        //Câu 4:
+        console.log('   Coding Challenge #4');
+        document.getElementById('convertButton').addEventListener('click', function () {
+        const inputText = document.getElementById('inputTextarea').value;
+        const variableNames = inputText.split('\n'); // Split by newline character
+
+        const outputDiv = document.getElementById('outputDiv');
+        outputDiv.innerHTML = ''; // Clear previous results
+
+        variableNames.forEach(function (variableName) {
+            const words = variableName.split('_');
+            let camelCaseName = words[0];
+
+            // Convert to camelCase
+            for (let i = 1; i < words.length; i++) {
+            camelCaseName += words[i][0].toUpperCase() + words[i].slice(1);
+            }
+
+            // Display with corresponding number of ✅ symbols
+            const resultString = camelCaseName + ' ' + '✅'.repeat(camelCaseName.length - 1);
+            const resultElement = document.createElement('p');
+            resultElement.textContent = resultString;
+            outputDiv.appendChild(resultElement);
+        });
+        });
+
+
+        //A Closer Look at Functions
+        console.log('\n\nA Closer Look at Functions');
+        //Câu 1:
+        console.log('   Coding Challenge #1');
+        const poll = {
+            question: "What is your favourite programming language?",
+            options: ["JavaScript", "Python", "Rust", "C++"],
+            answers: [0, 0, 0, 0],
+
+            registerNewAnswer: function() {
+                const input = prompt(
+                    `${this.question}\n${this.options.join('\n')}\n(Write option number)`
+                );
+                const choice = parseInt(input);
+
+                if (!isNaN(choice) && choice >= 0 && choice < this.options.length) {
+                    this.answers[choice]++;
+                } else {
+                    alert('Invalid choice. Please choose a number between 0 and ' + (this.options.length - 1));
+                }
+
+                this.displayResults();
+            },
+
+            displayResults: function(type = 'array') {
+                if (type === 'array') {
+                    console.log(this.answers);
+                } else if (type === 'string') {
+                    console.log(`Poll results are ${this.answers.join(', ')}`);
+                }
+            },
+        };
+
+        document.querySelector('.answer-btn').addEventListener('click', function() {
+            poll.registerNewAnswer();
+        });
+
+        //Câu 2:
+        console.log('\n   Coding Challenge #2');
+        (function () {
+            const header = document.querySelector('h1');
+
+            if (header) {
+                header.style.color = 'red';
+
+                document.body.addEventListener('click', function () {
+                    header.style.color = 'blue';
+                });
+            } else {
+                console.log('Phần tử h1 không tồn tại trong tài liệu HTML.');
+            }
+        })();
+
+
+        //Working With Arrays
+        console.log('\n\nWorking With Arrays');
+        //Câu 1:
+        console.log('   Coding Challenge #1');
+        function checkDogs(dogsJulia, dogsKate) {
+            // Tạo một bản sao shallow của mảng dogsJulia để không thay đổi tham số đầu vào
+            const juliaCorrected = dogsJulia.slice();
+
+            // Loại bỏ tuổi của mèo (2 tuổi đầu và 2 tuổi cuối)
+            juliaCorrected.splice(0, 1); // Loại bỏ tuổi mèo thứ nhất
+            juliaCorrected.splice(-2); // Loại bỏ tuổi mèo thứ hai và thứ ba từ cuối
+
+            // Tạo một mảng chứa cả dữ liệu của Julia (đã sửa) và Kate
+            const allDogs = [...juliaCorrected, ...dogsKate];
+
+            // Duyệt qua từng dog và kiểm tra xem nó là người lớn hay còn là dog con
+            allDogs.forEach((age, index) => {
+                const dogType = age >= 3 ? 'adult' : 'puppy';
+                console.log(`Dog number ${index + 1} is an ${dogType}, and is ${age} years old`);
+            });
+        }
+
+        // Test dữ liệu
+        const data1Julia = [3, 5, 2, 12, 7];
+        const data1Kate = [4, 1, 15, 8, 3];
+        checkDogs(data1Julia, data1Kate);
+
+        const data2Julia = [9, 16, 6, 8, 3];
+        const data2Kate = [10, 5, 6, 1, 4];
+        checkDogs(data2Julia, data2Kate);
+
+        // Câu 2
+        console.log('\n   Coding Challenge #2');
+        function calcAverageHumanAge(ages) {
+            // Tính tuổi của chó trong năm người bằng công thức
+            const humanAges = ages.map(dogAge => (dogAge <= 2) ? 2 * dogAge : 16 + dogAge * 4);
+
+            // Loại bỏ tất cả các chó dưới 18 tuổi (18 tuổi là tuổi người)
+            const adults = humanAges.filter(age => age >= 18);
+
+            // Tính trung bình tuổi của tất cả các chó người lớn
+            if (adults.length === 0) {
+                return 0; // Tránh chia cho 0 nếu không có chó nào ở độ tuổi người lớn
+            }
+
+            const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
+            return average;
+        }
+
+        // Test dữ liệu cho Câu 2
+        const data1 = [5, 2, 4, 1, 15, 8, 3];
+        const data2 = [16, 6, 10, 5, 6, 1, 4];
+
+        const avg1 = calcAverageHumanAge(data1);
+        console.log(`Average human age of adult dogs in Data 1: ${avg1.toFixed(2)} years`);
+
+        const avg2 = calcAverageHumanAge(data2);
+        console.log(`Average human age of adult dogs in Data 2: ${avg2.toFixed(2)} years`);
+
+        // Câu 3
+        console.log('\n   Coding Challenge #3');
+        const calcAverageHumanAge2 = ages =>
+            ages
+            .map(dogAge => (dogAge <= 2) ? 2 * dogAge : 16 + dogAge * 4)
+            .filter(age => age >= 18)
+            .reduce((acc, age, _, arr) => acc + age / arr.length, 0);
+
+        // Test dữ liệu cho Câu 3
+        const dt1 = [5, 2, 4, 1, 15, 8, 3];
+        const dt2 = [16, 6, 10, 5, 6, 1, 4];
+
+        const avg11 = calcAverageHumanAge2(dt1);
+        console.log(`Average human age of adult dogs in Data 1: ${avg11.toFixed(2)} years`);
+
+        const avg12 = calcAverageHumanAge2(dt2);
+        console.log(`Average human age of adult dogs in Data 2: ${avg12.toFixed(2)} years`);
+
+        // Câu 4
+        console.log('\n   Coding Challenge #4');
+        // Array chứa đối tượng của các con chó
+        const dogs = [
+            { weight: 22, owner: 'Alice' },
+            { weight: 8, owner: 'Bob' },
+            { weight: 13, owner: 'Matilda' },
+            { weight: 32, owner: 'Sarah' },
+            { weight: 19, owner: 'John' },
+            { weight: 24, owner: 'Michael' },
+        ];
+
+        // 1. Tính toán recommendedFood cho mỗi con chó và thêm vào đối tượng
+        dogs.forEach(dog => {
+            dog.recommendedFood = Math.trunc(dog.weight ** 0.75 * 28);
+        });
+
+        // 2. Tìm con chó của Sarah và kiểm tra nếu ăn quá nhiều hoặc quá ít
+        const sarahDog = dogs.find(dog => dog.owner === 'Sarah');
+        if (sarahDog) {
+            if (sarahDog.recommendedFood < sarahDog.weight) {
+                console.log(`Sarah's dog is eating too much.`);
+            } else if (sarahDog.recommendedFood > sarahDog.weight) {
+                console.log(`Sarah's dog is eating too little.`);
+            } else {
+                console.log(`Sarah's dog is eating the right amount.`);
+            }
+        }
+
+        // 3. Tạo mảng chứa chủ của các con chó ăn quá nhiều và quá ít
+        const ownersEatTooMuch = dogs
+            .filter(dog => dog.weight > dog.recommendedFood)
+            .map(dog => dog.owner);
+
+        const ownersEatTooLittle = dogs
+            .filter(dog => dog.weight < dog.recommendedFood)
+            .map(dog => dog.owner);
+
+        // 4. Xuất thông báo cho từng mảng tạo ra ở bước 3
+        console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!`);
+        console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little!`);
+
+        // 5. Kiểm tra xem có con chó nào ăn đúng lượng thức ăn đề xuất không
+        const isAnyDogEatingRecommendedAmount = dogs.some(dog =>
+            dog.weight === dog.recommendedFood
+        );
+
+        console.log(`Is there any dog eating the recommended amount? ${isAnyDogEatingRecommendedAmount}`);
+
+        // 6. Kiểm tra xem có con chó nào ăn một lượng thức ăn tốt không
+        const isAnyDogEatingOkayAmount = dogs.some(dog =>
+            dog.weight > dog.recommendedFood * 0.9 && dog.weight < dog.recommendedFood * 1.1
+        );
+
+        console.log(`Is there any dog eating an okay amount? ${isAnyDogEatingOkayAmount}`);
+
+        // 7. Tạo mảng chứa các con chó ăn một lượng thức ăn tốt
+        const dogsEatingOkayAmount = dogs.filter(dog =>
+            dog.weight > dog.recommendedFood * 0.9 && dog.weight < dog.recommendedFood * 1.1
+        );
+
+        // 8. Tạo bản sao shallow của mảng 'dogs' và sắp xếp theo recommended food portion tăng dần
+        const sortedDogs = [...dogs].sort((a, b) => a.recommendedFood - b.recommendedFood);
+
+        console.log(sortedDogs);
+
+
+        //Object Oriented Programming (OOP)
+        console.log('\n\nObject Oriented Programming (OOP)');
+        // Câu 1:
+        console.log('   Coding Challenge #1');
+        // 1. Sử dụng hàm constructor để tạo đối tượng 'Car'
+        function Car(make, speed) {
+            this.make = make;
+            this.speed = speed;
+        }
+
+        // 2. Thêm phương thức 'accelerate' vào prototype của 'Car'
+        Car.prototype.accelerate = function () {
+            this.speed += 10;
+            console.log(`${this.make} is accelerating. New speed: ${this.speed} km/h`);
+        };
+
+        // 3. Thêm phương thức 'brake' vào prototype của 'Car'
+        Car.prototype.brake = function () {
+            this.speed -= 5;
+            console.log(`${this.make} is braking. New speed: ${this.speed} km/h`);
+        };
+
+        // 4. Tạo 2 đối tượng 'Car' và thực hiện thử nghiệm 'accelerate' và 'brake'
+        const car1a = new Car('BMW', 120);
+        const car2a = new Car('Mercedes', 95);
+
+        console.log(`Data car 1: ${car1a.make} going at ${car1a.speed} km/h`);
+        console.log(`Data car 2: ${car2a.make} going at ${car2a.speed} km/h`);
+
+        car1a.accelerate(); // Tăng tốc xe 1 lần
+        car1a.accelerate(); // Tăng tốc xe thêm 1 lần
+        car1a.brake();      // Phanh xe 1 lần
+
+        car2a.accelerate(); // Tăng tốc xe 1 lần
+        car2a.brake();      // Phanh xe 1 lần
+
+        // Câu 2:
+        console.log('\n   Coding Challenge #2');
+        // 1. Tạo lớp 'CarCl' bằng cách sử dụng ES6 class
+        class CarCl {
+            constructor(make, speed) {
+                this.make = make;
+                this.speed = speed;
+            }
+
+            // 2. Thêm getter 'speedUS' để trả về tốc độ hiện tại ở dạng mi/h
+            get speedUS() {
+                return this.speed / 1.6;
+            }
+
+            // 3. Thêm setter 'speedUS' để thiết lập tốc độ hiện tại ở dạng mi/h (chuyển đổi sang km/h trước khi lưu giá trị)
+            set speedUS(speedInMPH) {
+                this.speed = speedInMPH * 1.6;
+            }
+
+            // 4. Phương thức 'accelerate' để tăng tốc độ
+            accelerate() {
+                this.speed += 10;
+                console.log(`${this.make} is accelerating. New speed: ${this.speed} km/h`);
+            }
+
+            // 5. Phương thức 'brake' để giảm tốc độ
+            brake() {
+                this.speed -= 5;
+                console.log(`${this.make} is braking. New speed: ${this.speed} km/h`);
+            }
+        }
+
+        // 6. Tạo một đối tượng 'CarCl' mới và thử nghiệm các phương thức, getter và setter
+        const car1b = new CarCl('Ford', 120);
+        console.log(`Data car 1: ${car1b.make} going at ${car1b.speed} km/h`);
+
+        car1b.accelerate(); // Tăng tốc
+        car1b.brake();      // Phanh
+
+        console.log(`Current speed in mi/h: ${car1b.speedUS}`); // Đọc tốc độ ở dạng mi/h
+
+        car1b.speedUS = 75; // Đặt tốc độ ở dạng mi/h
+        console.log(`New speed in km/h: ${car1b.speed}`);
+
+        // Câu 3:
+        console.log('\n   Coding Challenge #3');
+        // 1. Use a constructor function to implement an Electric Car (called 'EV') as a child class of 'Car'
+        function EV(make, speed, charge) {
+            Car.call(this, make, speed);
+            this.charge = charge;
+        }
+
+        // Inherit from 'Car' prototype
+        EV.prototype = Object.create(Car.prototype);
+
+        // 2. Implement a 'chargeBattery' method
+        EV.prototype.chargeBattery = function (chargeTo) {
+            this.charge = chargeTo;
+        };
+
+        // 3. Implement an 'accelerate' method
+        EV.prototype.accelerate = function () {
+            this.speed += 20;
+            this.charge -= 1;
+            console.log(`${this.make} going at ${this.speed} km/h, with a charge of ${this.charge}%`);
+        };
+
+        // Create an electric car object for Challenge #3
+        const electricCar3 = new EV('Tesla', 120, 23);
+
+        // Experiment with calling 'accelerate', 'brake', and 'chargeBattery'
+        console.log(`Data car 1: ${electricCar3.make} going at ${electricCar3.speed} km/h, with a charge of ${electricCar3.charge}%`);
+        electricCar3.accelerate(); // Accelerate
+        electricCar3.brake();      // Brake
+        electricCar3.chargeBattery(90); // Charge to 90%
+        electricCar3.accelerate(); // Accelerate after charging
+
+
+        // Câu 4:
+        console.log('\n   Coding Challenge #4');
+        // 1. Re-create Challenge #3 using ES6 classes: create an 'EVCl' child class of the 'CarCl' class
+        class EVCl extends CarCl {
+            constructor(make, speed, charge) {
+                super(make, speed);
+                this._charge = charge; // Make the 'charge' property private
+            }
+
+            chargeBattery(chargeTo) {
+                this._charge = chargeTo;
+                return this;
+            }
+
+            accelerate() {
+                this.speed += 20;
+                this._charge -= 1;
+                console.log(`${this.make} going at ${this.speed} km/h, with a charge of ${this._charge}%`);
+                return this;
+            }
+
+            // Override the 'brake' method for EVCl
+            brake() {
+                this.speed -= 10; // Decrease speed by 10 for electric car
+                console.log(`${this.make} is braking. New speed: ${this.speed} km/h`);
+                return this;
+            }
+        }
+
+        const electricCar4 = new EVCl('Rivian', 120, 23);
+
+        console.log(`Data car 1: ${electricCar4.make} going at ${electricCar4.speed} km/h, with a charge of ${electricCar4._charge}%`);
+        electricCar4.accelerate().brake().chargeBattery(90).accelerate();
+
+
+        //ASYNCHRONOUS JAVASCRIPT
+        console.log('\n\nASYNCHRONOUS JAVASCRIPT');
+        // Câu 1:
+        console.log('   Coding Challenge #1');
+
+        
     </script>
 </body>
 </html>
